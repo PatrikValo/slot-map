@@ -16,5 +16,13 @@ public class Handle {
     public int getGeneration() {
         return generation;
     }
+
+    @Override
+    public String toString() {
+        return "Handle{" +
+                "ind: " + index +
+                ", gen: " + generation +
+                '}';
+    }
 }
 
