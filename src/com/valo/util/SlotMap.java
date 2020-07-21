@@ -35,12 +35,6 @@ public class SlotMap<E> implements Iterable<E> {
             used = false;
         }
 
-        public Node(int ind, int gen) {
-            index = ind;
-            generation = gen;
-            used = true;
-        }
-
         public int getIndex() {
             return index;
         }
