@@ -1,5 +1,3 @@
-package com.valo.util;
-
 import java.util.Objects;
 
 public class Pair<L, R> {

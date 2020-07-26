@@ -1,9 +1,7 @@
-package com.valo.util;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class SlotMap<E> implements Iterable<E> {
+public class SlotMap<E> implements Iterable<E>, Map<E> {
     private class SlotMapIterator implements Iterator<E> {
         private int index;
         private final List<E> data;
@@ -82,15 +80,29 @@ public class SlotMap<E> implements Iterable<E> {
     private final List<Pair<E, Integer>> data = new ArrayList<>();
     private final LinkedList<Integer> free = new LinkedList<>();
 
+    @Override
+    public void clear() {
+        indices.clear();
+        data.clear();
+        free.clear();
+    }
+
+    @Override
     public boolean isEmpty() {
         return data.isEmpty();
     }
 
+    @Override
     public int size() {
         return data.size();
     }
 
+    @Override
     public Handle insert(E value) {
+        if (value == null) {
+            throw new RuntimeException("Value can't be null!");
+        }
+
         int indexToIndices = getFreeIndexToIndices();
 
         // insert into data value and store information about indices position
@@ -106,7 +118,12 @@ public class SlotMap<E> implements Iterable<E> {
         return new Handle(indexToIndices, node.getGeneration());
     }
 
+    @Override
     public boolean valid(Handle handle) {
+        if (handle == null) {
+            return false;
+        }
+
         Node node = indices.get(handle.getIndex());
 
         if (!node.isUsed()) {
@@ -120,6 +137,7 @@ public class SlotMap<E> implements Iterable<E> {
         return handle.getGeneration() == node.getGeneration();
     }
 
+    @Override
     public void erase(Handle handle) {
         if (!valid(handle)) {
             throw new RuntimeException("Invalid handle!");
@@ -133,6 +151,7 @@ public class SlotMap<E> implements Iterable<E> {
         clearIndicesOnIndex(indexToIndices);
     }
 
+    @Override
     public E get(Handle handle) {
         if (!valid(handle)) {
             throw new RuntimeException("Invalid handle!");
@@ -143,8 +162,13 @@ public class SlotMap<E> implements Iterable<E> {
     }
 
     @Override
+    public Collection<E> values() {
+        return getValuesList();
+    }
+
+    @Override
     public Iterator<E> iterator() {
-        return new SlotMapIterator(data.stream().map(Pair::getLeft).collect(Collectors.toList()));
+        return new SlotMapIterator(getValuesList());
     }
 
     @Override
@@ -185,5 +209,9 @@ public class SlotMap<E> implements Iterable<E> {
     private void clearIndicesOnIndex(int index) {
         indices.get(index).setUsed(false);
         free.add(index);
+    }
+
+    private List<E> getValuesList() {
+        return data.stream().map(Pair::getLeft).collect(Collectors.toList());
     }
 }
