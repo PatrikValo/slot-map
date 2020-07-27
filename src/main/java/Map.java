@@ -1,6 +1,6 @@
 import java.util.Collection;
 
-public interface Map<E> {
+public interface Map<E> extends Iterable<E> {
     void clear();
 
     boolean isEmpty();
