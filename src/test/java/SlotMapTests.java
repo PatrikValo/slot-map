@@ -40,25 +40,25 @@ public class SlotMapTests {
     public void sizeTest() {
         Map<Integer> slotmap = new SlotMap<>();
 
-        assertEquals(slotmap.size(), 0);
+        assertEquals( 0, slotmap.size());
         slotmap.insert(5);
-        assertEquals(slotmap.size(), 1);
+        assertEquals(1, slotmap.size());
         slotmap.insert(8);
-        assertEquals(slotmap.size(), 2);
+        assertEquals(2, slotmap.size());
         slotmap.clear();
-        assertEquals(slotmap.size(), 0);
+        assertEquals(0, slotmap.size());
         Handle a = slotmap.insert(4);
-        assertEquals(slotmap.size(), 1);
+        assertEquals(1, slotmap.size());
         Handle b = slotmap.insert(25);
-        assertEquals(slotmap.size(), 2);
+        assertEquals(2, slotmap.size());
         Handle c = slotmap.insert(5);
-        assertEquals(slotmap.size(), 3);
+        assertEquals(3, slotmap.size());
         slotmap.erase(a);
-        assertEquals(slotmap.size(), 2);
+        assertEquals(2, slotmap.size());
         slotmap.erase(b);
-        assertEquals(slotmap.size(), 1);
+        assertEquals(1, slotmap.size());
         slotmap.erase(c);
-        assertEquals(slotmap.size(), 0);
+        assertEquals(0, slotmap.size());
     }
 
     @Test
@@ -99,23 +99,23 @@ public class SlotMapTests {
         Map<String> slotmap = new SlotMap<>();
 
         var a = slotmap.insert("one");
-        assertEquals(a, new Handle(0, 1));
+        assertEquals(new Handle(0, 1), a);
         var b = slotmap.insert("two");
-        assertEquals(b, new Handle(1, 1));
+        assertEquals(new Handle(1, 1), b);
         var c = slotmap.insert("three");
-        assertEquals(c, new Handle(2, 1));
+        assertEquals(new Handle(2, 1), c);
         slotmap.erase(b);
         b = slotmap.insert("four");
-        assertEquals(b, new Handle(1, 2));
+        assertEquals(new Handle(1, 2), b);
         slotmap.erase(a);
         slotmap.erase(c);
         a = slotmap.insert("five");
-        assertEquals(a, new Handle(0, 2));
+        assertEquals(new Handle(0, 2), a);
         slotmap.erase(a);
         c = slotmap.insert("six");
-        assertEquals(c, new Handle(2, 2));
+        assertEquals(new Handle(2, 2), c);
         a = slotmap.insert("seven");
-        assertEquals(a, new Handle(0, 3));
+        assertEquals(new Handle(0, 3), a);
     }
 
     @Test
@@ -159,7 +159,7 @@ public class SlotMapTests {
         slotmap.insert(3);
         slotmap.insert(5);
         slotmap.insert(8);
-        assertEquals(slotmap.values(), alist);
+        assertEquals( alist, slotmap.values());
     }
 
     @Test
@@ -177,7 +177,7 @@ public class SlotMapTests {
 
         int index = 0;
         for (Integer number : slotmap) {
-            assertEquals(number, alist.get(index));
+            assertEquals(alist.get(index), number);
             index++;
         }
     }

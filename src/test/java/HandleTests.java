@@ -8,8 +8,8 @@ public class HandleTests {
         int gen = 2578;
 
         Handle a = new Handle(ind, gen);
-        assertEquals("Index should be " + ind, a.getIndex(), ind);
-        assertEquals("Generation should be " + gen, a.getGeneration(), gen);
+        assertEquals("Index should be " + ind, ind, a.getIndex());
+        assertEquals("Generation should be " + gen, gen, a.getGeneration());
     }
 
     @Test
@@ -18,8 +18,8 @@ public class HandleTests {
         int gen = 158;
 
         Handle a = new Handle(ind, gen);
-        assertEquals("Index should be " + ind, a.getIndex(), ind);
-        assertEquals("Generation should be " + gen, a.getGeneration(), gen);
+        assertEquals("Index should be " + ind, ind, a.getIndex());
+        assertEquals("Generation should be " + gen, gen, a.getGeneration());
     }
 
     @Test
@@ -28,8 +28,8 @@ public class HandleTests {
         int gen = 1;
 
         Handle a = new Handle(ind, gen);
-        assertEquals("Index should be " + ind, a.getIndex(), ind);
-        assertEquals("Generation should be " + gen, a.getGeneration(), gen);
+        assertEquals("Index should be " + ind, ind, a.getIndex());
+        assertEquals("Generation should be " + gen, gen, a.getGeneration());
     }
 
     @Test
@@ -38,8 +38,8 @@ public class HandleTests {
         int gen = -1;
 
         Handle a = new Handle(ind, gen);
-        assertEquals("Index should be " + ind, a.getIndex(), ind);
-        assertEquals("Generation should be " + gen, a.getGeneration(), gen);
+        assertEquals("Index should be " + ind, ind, a.getIndex());
+        assertEquals("Generation should be " + gen, gen, a.getGeneration());
     }
 
     @Test
@@ -48,6 +48,6 @@ public class HandleTests {
         int gen = 1561;
 
         Handle a = new Handle(ind, gen);
-        assertEquals(a.toString(), "Handle{" + "ind: " + ind + ", gen: " + gen + "}");
+        assertEquals( "Handle{" + "ind: " + ind + ", gen: " + gen + "}", a.toString());
     }
 }
