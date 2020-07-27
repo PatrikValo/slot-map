@@ -1,7 +1,7 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class SlotMap<E> implements Iterable<E>, Map<E> {
+public class SlotMap<E> implements Map<E> {
     private class SlotMapIterator implements Iterator<E> {
         private int index;
         private final List<E> data;
@@ -69,11 +69,6 @@ public class SlotMap<E> implements Iterable<E>, Map<E> {
         public int hashCode() {
             return Objects.hash(index, generation);
         }
-
-        @Override
-        public String toString() {
-            return "Node{" + "index=" + index + ", generation=" + generation + '}';
-        }
     }
 
     private final List<Node> indices = new ArrayList<>();
@@ -110,7 +105,7 @@ public class SlotMap<E> implements Iterable<E>, Map<E> {
         int indexToData = data.size() - 1;
 
         // refresh information in indices
-        Node node = indices.get(indexToData);
+        Node node = indices.get(indexToIndices);
         node.setIndex(indexToData);
         node.incrementGeneration();
         node.setUsed(true);
@@ -124,13 +119,16 @@ public class SlotMap<E> implements Iterable<E>, Map<E> {
             return false;
         }
 
-        Node node = indices.get(handle.getIndex());
+        int size = indices.size();
+        int index = handle.getIndex();
 
-        if (!node.isUsed()) {
+        if (index >= size || index < 0) {
             return false;
         }
 
-        if (handle.getIndex() >= size()) {
+        Node node = indices.get(handle.getIndex());
+
+        if (!node.isUsed()) {
             return false;
         }
 
@@ -147,7 +145,8 @@ public class SlotMap<E> implements Iterable<E>, Map<E> {
         int indexToData = indices.get(handle.getIndex()).getIndex();
         int indexToIndices = data.get(indexToData).getRight();
 
-        data.remove(handle.getIndex());
+        data.remove(indexToData);
+        moveDataByOneFrom(indexToData);
         clearIndicesOnIndex(indexToIndices);
     }
 
@@ -213,5 +212,17 @@ public class SlotMap<E> implements Iterable<E>, Map<E> {
 
     private List<E> getValuesList() {
         return data.stream().map(Pair::getLeft).collect(Collectors.toList());
+    }
+
+    private void moveDataByOneFrom(int index) {
+        if (index >= size()) {
+            return;
+        }
+
+        for (; index < size(); index++) {
+            int indexToIndices = data.get(index).getRight();
+            indices.get(indexToIndices).setIndex(index);
+        }
+
     }
 }
